@@ -303,13 +303,15 @@ class ZenSplitViewLinkDrop {
 
 (function () {
   if (!globalThis.zenDropLinkInstance) {
-    window.addEventListener(
-      "load",
-      () => {
-        globalThis.zenDropLinkInstance = new ZenSplitViewLinkDrop();
-        globalThis.zenDropLinkInstance.init();
-      },
-      { once: true },
-    );
+    const init = () => {
+      globalThis.zenDropLinkInstance = new ZenSplitViewLinkDrop();
+      globalThis.zenDropLinkInstance.init();
+    };
+
+    if (document.readyState === "complete") {
+      init();
+    } else {
+      window.addEventListener("load", init, { once: true });
+    }
   }
 })();
